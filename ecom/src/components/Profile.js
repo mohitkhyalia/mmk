@@ -3,17 +3,20 @@ import { Link } from "react-router-dom";
 import Nav from './Nav';
 import { useAuth  } from '../context/AuthContext';
 import { useUser  } from '../context/UserContext';
-import {useCart} from '../context/CartContext'
+//import {useCart} from '../context/CartContext'
 import Singin from './Signin';
 
 
 export default function Profile() {
   const { getuser,isLoggedIn,suserData } = useAuth();
+  //const {getcart} = useCart();
   const { updateData } = useUser();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [is, setIs] = useState(true);
 
   //const datas=userData?.find((item) => item.name === suserData.name)
   
+    
 
   const handleChange = (e) => {
     
@@ -30,6 +33,16 @@ export default function Profile() {
 
   if(isLoggedIn){
     console.log(suserData,"-------Maind id----")
+   /* for (let i = 1; i <= 3; i++) {
+      setTimeout(() => {
+        if(is){
+          if(suserData){
+          getcart(suserData.id)
+          setIs(false)}
+        }
+      }, i * 1000); 
+    }*/
+  
    // updateUserId(suserData.id);
   }
    

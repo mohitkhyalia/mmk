@@ -10,14 +10,14 @@ import axios from 'axios';
 export default function Cart(props) {
   const { isLoggedIn ,logout,suserData} = useAuth();
  // const { cartdata,removeFromCart, clearCart ,user_id, addToCart, get_cart} = useCart();
- const { cartItems, addToCart,getcart, removeFromCart ,getItems} = useCart();
+ const { cartItems, addToCart,cartItems_todisplay, removeFromCart ,getItems} = useCart();
   const { couponData} = useCopnContext();
  const [subtotal, setSubtotal] = useState(0);
   const taxRate = 0.05; // 5% tax rate
   const shippingFee = 15;
   const [couponInput, setCouponInput] = useState(''); // Note the corrected variable name
   const [appliedCoupon, setAppliedCoupon] = useState(null); 
-  console.log(cartItems)
+  console.log(cartItems_todisplay)
   //get_cart();
       
       const applyCoupon = () => {
@@ -41,17 +41,36 @@ export default function Cart(props) {
 
      
      
-    
-    
+      const removeCart =(e)=>{
+        let itemToRemove;
+       
+          
+        itemToRemove = {
+            id: e.id,
+          name:e.name,
+        }
+        //supdateUserId(suserData.id);
+        removeFromCart(itemToRemove);
+        console.log(itemToRemove);
+        alert(`${e.name} removed from cart`)
+        
+        }
+  
 
   // Calculate the subtotal when the cart or item quantities change
   useEffect(() => {
-    /*let newSubtotal = 0;
-    for (const item of cartdata) {
-      newSubtotal += item.price * item.qty;
-    }
-    setSubtotal(newSubtotal);*/
-    
+    // Function to refresh data
+    const fetchData = () => {
+      // Your data fetching logic here
+      console.log('Data refreshed!',cartItems_todisplay.items);
+    };
+
+    // Refresh data three times in the first 30 seconds
+   /* for (let i = 1; i <= 3; i++) {
+      setTimeout(() => {
+        fetchData();
+      }, i * 1000); // 10 seconds interval
+    }*/
   }, []);
 
   // Calculate the tax and grand total
@@ -74,8 +93,6 @@ export default function Cart(props) {
     }this is empty
   }*/
   
-console.log(getItems)
-
     return(<>
     <Nav/>
             
@@ -88,7 +105,7 @@ console.log(getItems)
             <h1>Shopping Cart</h1>
 
 <div className="shopping-cart">
-  {Array.isArray(cartItems) && cartItems.length > 0 ?(<>{cartItems.map((item, index) => (<>
+  {Array.isArray(cartItems_todisplay) && cartItems_todisplay.length > 0 ?(<>{cartItems_todisplay.map((item, index) => (<>
   <div className="column-labels">
     <label className="product-image">Image</label>
     <label className="product-details">Product</label>
@@ -111,7 +128,7 @@ console.log(getItems)
     {item.qty} 
     </div>
     <div className="product-removal">
-      <button className="remove-product" onClick={() => removeFromCart(item)}>
+      <button className="remove-product" onClick={() => removeCart(item)}>
         Remove
       </button>
     </div>

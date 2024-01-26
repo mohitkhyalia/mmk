@@ -62,26 +62,53 @@ export default function Nav() {
       
     return(
         <>
-        <section className="bg-b">
+        <section className="bg-b ">
             <div className='sidebar sidepanel' id="mySidepanel" style={{ display: sidePanelWidth  }}>
             <button  className="closebtn" onClick={closeNav}>×</button>
                 <div className="side-head">
-                    <p>MogHit</p>
+                <Link to='/' ><img src='logo512.png' alt="Product Image" /></Link>
                 </div>
-                <hr className='hr'></hr>
+                {/*<hr className='hr'></hr>*/}
                 <div className='col-nav'>
-                    <ul className='col-navul'>
-                        <li className='col-nav-itm'><Link to={{pathname: `/d/${''}`}}>metireals</Link></li>
-                        <li className='col-nav-itm'><Link  to={{pathname: `/d/${'readymade'}`}}>ReadyMade</Link></li>
-                        <li className='col-nav-itm'><Link to={{pathname: `/d/${'saree'}`}}>Sarees</Link></li>
-                        <li className='col-nav-itm'><Link to={{pathname: `/d/${''}`}}>****</Link></li>
-                        <li className='col-nav-itm'><Link to={{pathname: `/d/${'night_wears'}`}}>Night wears</Link></li>
-                        <li className='col-nav-itm'><Link to={{pathname: `/d/${'laptop'}`}}>Bangals</Link></li>
+                    <ul className='col-navul '>
+                       {/* <li className='col-nav-itm dropup'>metireals  <span class="material-symbols-outlined">arrow_drop_down</span>
+                        <div className='dropup-content'>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Cloth</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}></Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>this</Link>
+                            </div>
+                        </li>*/}
+                        
+                        <li className='col-nav-itm dropup'>ReadyMade<div className='dropup-content'>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Formals</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Informals</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Treditionals</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Designer</Link>
+                            </div></li>
+                        <li className='col-nav-itm dropup'>Sarees<div className='dropup-content'>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Silk</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Regular</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}></Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}></Link>
+                            </div></li>
+                        <li className='col-nav-itm dropup'>Accessories<div className='dropup-content'>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Bangals</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Bindi</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Ear Rings</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}></Link>
+                            </div></li>
+                        <li className='col-nav-itm dropup'>Night wears<div className='dropup-content'>
+                            <Link to={{pathname: `/d/${'saree'}`}}>One Piece</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Two Piece</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}>Three Piece</Link>
+                            <Link to={{pathname: `/d/${'saree'}`}}></Link>
+                            </div></li>
                         <li className='col-nav-itm'><Link to='/contact'>Contact Us</Link></li>
                         
                     </ul>
                 </div>
                 <div className='side-footer'>
+                
                     <div className='m3'>
                     {isLoggedIn ? (<Link className='s-btn'onClick={handleLogout}>Log Out</Link>):(
                         <Link to='/profile' className='s-btn'>Login</Link>)}
@@ -105,7 +132,7 @@ export default function Nav() {
                 </div>
             </div>
             <div className='main-cols'>
-            <Link to='/'>New</Link><Link to='/sale'>sale</Link><Link to='https://wa.me/919176782798'>Talk to Tailor</Link>
+            <Link to='/'>New Arrivals</Link><Link to='/sale'>Sale</Link><Link to='https://wa.me/919176782798'>Talk to Tailor</Link>
             </div>
         </div>
 

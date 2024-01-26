@@ -9,7 +9,16 @@ export default function Dyna() {
   const { addToFav } = useCart();
   const [searchInput, setSearchInput] = useState('');
   const { products, loading } = useProductsContext();
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
   
+  useEffect(() => {
+    // Filter products based on search input
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setSearchSuggestions(filteredProducts);
+  }, [searchInput, products]);
+
 
   if (loading) {
     return (
@@ -52,7 +61,9 @@ export default function Dyna() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
+          
         </div>
+        
         <div className="ad-space">
           {dproduct.length === 0 ? (
             <p>No products found in this category.</p>

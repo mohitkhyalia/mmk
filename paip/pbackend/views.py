@@ -171,12 +171,12 @@ class getcartda(APIView):
 
     def get(self, request):
         user_id = int(request.query_params.get('user_id'))
-        print('gett***************>>>>',cart.objects.filter(user_id=user_id))
         carts = cart.objects.filter(user_id=user_id)
         
         if carts.exists():
             obj = carts.first()
             san = CartSerializer(obj)
+            
             return Response(san.data)
         else:
             return Response({"error": "Object not found for the given user_id"}, status=404)
@@ -186,35 +186,58 @@ class getcartda(APIView):
         user_id = int(request.query_params.get('user_id'))
 
         carts = cart.objects.filter(user_id=user_id)
-        
         if carts.exists():
             obj = carts.first()
+            
             existing_items = obj.items
-            print('.....>>>>',existing_items['items'])
-            new_items = data.get('items', [])
-            updated_items = existing_items['items'].append(new_items)
-            obj.items = updated_items
-            obj.save()
-            san = CartSerializer(obj)
-            return Response(san.data)
+            new_items = data.get('items', None)
+            if new_items:
+                existing_items['items'].append(new_items)
+                obj.items =existing_items
+                print(obj.items,new_items)
+                obj.save()
+                san = CartSerializer(obj)
+            return Response({})
         else:
-            san = CartSerializer(data={'user_id': user_id, 'items': data})
+            san = CartSerializer(data={'user_id': user_id, 'items': data['items']})
             if san.is_valid():
                 san.save()
                 return Response(san.data)
             return Response(san.errors)
 
-    def delete(self,request):
+    def patch(self,request):
         user_id = request.query_params.get('user_id')
-        if user_id is not None:
-            print("*****************-----delete")
+        item_id=request.data['id']
+        print('gett***************>>>>',item_id)
+        if user_id is not None and item_id is not None:
             try:
                 user_id = int(user_id)
-                obj = cart.objects.get(user_id=user_id)
-                obj.delete()
-                return Response({"message": f"Product with id {user_id} deleted successfully."})
-            except (ValueError, product_info.DoesNotExist):
-                return Response({"error": f"Invalid or non-existing product ID: {user_id}"})
+                carts = cart.objects.filter(user_id=user_id)
+
+                if carts.exists():
+                    obj = carts.first()
+                    existing_items = obj.items.get('items', [])  
+
+                    found_index = None
+                    for index, item in enumerate(existing_items):
+                        if item['id'] == item_id:
+                            found_index = index
+                            break
+
+                    if found_index is not None:
+                        existing_items.pop(found_index)
+                        obj.items['items'] = existing_items
+                        obj.save()
+                        san = CartSerializer(obj)
+                        return Response({"message": f"Product with id {item_id} deleted successfully."})
+                    else:
+                        return Response({"error": f"Product with id {item_id} not found in the cart."})
+
+                else:
+                    return Response({"error": f"Cart not found for user with id {user_id}"})
+
+            except ValueError:
+                return Response({"error": f"Invalid user ID: {user_id}"})
         else:
             return Response({"error": "Product ID not provided in the request."})
         

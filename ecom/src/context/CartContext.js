@@ -1,61 +1,84 @@
 import React, { createContext, useContext, useState,useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from './AuthContext';
+//import { useAuth } from './AuthContext';
 
 // Create a context for the cart
 const CartContext = createContext();
 
 // Create a CartProvider component to manage the cart state
 const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [getItems, setGetItems] = useState([]);
-  const { suserData } = useAuth();
+  var cartItems_toadd=[];
+  const [cartItems_todisplay, set_cartItems] = useState([]);
+  const [id, setid] = useState();
+  //const { suserData } = useAuth();
   const client = axios.create({
     baseURL: 'http://127.0.0.1:8000',
   });
   
   useEffect(() => {
-    if(suserData.id){
-      getcart()
-    }
     
+    for (let i = 1; i <= 3; i++) {
+      setTimeout(() => {
+        
+          //getcart()
+        
+      }, i * 1000); // 10 seconds interval
+    }
   }, []);
 
   const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
-    patchcart(); getcart()
+    patchcart(item); getcart()
     // Pass the updated cartItems to patchcart
   };
 
   const removeFromCart = (item) => {
-    const updatedCart = cartItems.filter((cartItem) => cartItem !== item);
-    setCartItems(updatedCart);
-    patchcart();getcart()
+    deletecart(item);getcart(id)
   };
 
-  function getcart() {
-    const user_id = suserData.id;
-    client.get(`/api/getcart/?user_id=${user_id}`).then(function (res) {
+  function getcart(e) {
+    
+    client.get(`/api/getcart/?user_id=${id}`).then(function (res) {
       console.log(res);
-      setCartItems(res.data.items)
+      set_cartItems(res.data.items.items)
+      //setCartItems(res.data.items)
     });
   }
 
-  function patchcart() {
-    const user_id = suserData.id;
-    const cartData = {
-      user_id: user_id,
-      items: cartItems,
-    };
+  function getcartl(e) {
+    if(e){setid(e)
+    
+    client.get(`/api/getcart/?user_id=${e}`).then(function (res) {
+      console.log(res);
+      set_cartItems(res.data.items.items)
+      //setCartItems(res.data.items)
+    });}
+  }
 
-    client.post(`/api/getcart/?user_id=${user_id}`, cartData).then(function (res) {
+  function deletecart(e){
+    console.log(e)
+    client.patch(`/api/getcart/?user_id=${id}`, e).then(function (res) {
+      console.log(res)
+      set_cartItems()
+      
+    })
+  }
+  function patchcart(item) {
+    console.log(id)
+    const cartData = {
+      user_id: id,
+      items: item,
+    };
+    console.log(cartData)
+
+    client.post(`/api/getcart/?user_id=${id}`, cartData).then(function (res) {
+      
       console.log(res);
       getcart()
     });
   }
 
   return (
-    <CartContext.Provider value={{ cartItems,getItems, addToCart, removeFromCart, getcart }}>
+    <CartContext.Provider value={{ cartItems_todisplay, addToCart, removeFromCart, getcart ,getcartl}}>
       {children}
     </CartContext.Provider>
   );

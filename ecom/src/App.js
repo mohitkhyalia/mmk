@@ -26,7 +26,7 @@ function App() {
   return (
     <>
    <Router>
-   
+   <CartProvider>
    <AuthProvider>
    
    
@@ -34,14 +34,14 @@ function App() {
    
    
         <ProductsProvider>
-        <CartProvider>
+        
           <SaleProvider>
             
          <Routes>
           <Route exact path="/" element={<Index/>}></Route>
           <Route exact path="/product/:productid" element={<ProductsProvider><Product/></ProductsProvider>}></Route>
           <Route exact path="/contact" element={<Contact/>}></Route>
-          <Route exact path="/cart" element={ <CopnProvider><Cart/> </CopnProvider> }></Route>
+          <Route exact path="/cart/" element={ <CopnProvider><Cart/> </CopnProvider> }></Route>
           <Route exact path="/fav" element={<Fav/>}></Route>
           <Route exact path="/profile" element={<UserProvider><Profile/></UserProvider>}></Route>
           <Route exact path="/admin" element={<Admin/>}></Route>
@@ -49,16 +49,15 @@ function App() {
           <Route exact path="/d/:productcato" element={<Dyna/>}></Route>
           </Routes>
           </SaleProvider>
-          </CartProvider>
+          
           </ProductsProvider>
-         <Routes>
-          </Routes>
+         
           
       
       
       
       </AuthProvider>
-      
+      </CartProvider>
       </Router>
       
     </>

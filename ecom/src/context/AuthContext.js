@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {useCart} from './CartContext'
 
 
 const AuthContext = createContext();
@@ -20,6 +21,8 @@ export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isstaff, setIsstaff] = useState(false);
   const [suserData,setSuserData]=useState('');
+
+  const {getcartl} =useCart()
   
 
   useEffect(() => {
@@ -39,7 +42,7 @@ export function AuthProvider({ children }) {
     });
   }
 
-  
+ 
 
   async function getuser(){
 
@@ -80,7 +83,8 @@ export function AuthProvider({ children }) {
           setSuserData(res.data);
           //then also data should be come in get cart 
           setIsLoggedIn(true);
-        //other will come here
+        //getting  data for cart here
+          getcartl(res.data.id)
         }
         
       })
@@ -125,10 +129,6 @@ export function AuthProvider({ children }) {
   const updateislog=(newvalue)=>{
     setIsLoggedIn(newvalue)
   }
-
-
-
-
 
   
   return (
