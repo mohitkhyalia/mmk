@@ -190,8 +190,9 @@ class getcartda(APIView):
         if carts.exists():
             obj = carts.first()
             existing_items = obj.items
+            print('.....>>>>',existing_items['items'])
             new_items = data.get('items', [])
-            updated_items = existing_items + new_items
+            updated_items = existing_items['items'].append(new_items)
             obj.items = updated_items
             obj.save()
             san = CartSerializer(obj)

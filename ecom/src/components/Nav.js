@@ -66,7 +66,7 @@ export default function Nav() {
             <div className='sidebar sidepanel' id="mySidepanel" style={{ display: sidePanelWidth  }}>
             <button  className="closebtn" onClick={closeNav}>×</button>
                 <div className="side-head">
-                    <p>Poshak</p>
+                    <p>MogHit</p>
                 </div>
                 <hr className='hr'></hr>
                 <div className='col-nav'>
