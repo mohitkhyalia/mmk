@@ -20,10 +20,15 @@ class coupon(models.Model):
     code=models.CharField(max_length=50)
     off=models.IntegerField()
     vallidon=models.BooleanField(default=True) 
-
+def default():
+    return {'user_id': '7', 'items':{'user_id': '7', 'items':['nodata']}}
 class cart(models.Model):
     user_id=models.IntegerField()
-    items=models.JSONField()
+    items=models.JSONField(default=default)
+
+class fav(models.Model):
+    user_id=models.IntegerField()
+    items=models.JSONField(default=default)
 
 class Sale(models.Model):
     name = models.CharField(max_length=100)

@@ -132,7 +132,7 @@ export default function Nav() {
                 </div>
             </div>
             <div className='main-cols'>
-            <Link to='/'>New Arrivals</Link><Link to='/sale'>Sale</Link><Link to='https://wa.me/919176782798'>Talk to Tailor</Link>
+            <Link to='/n'>New Arrivals</Link><Link to='/sale'>Sale</Link><Link to='https://wa.me/919176782798'>Talk to Tailor</Link>
             </div>
         </div>
 

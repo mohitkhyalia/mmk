@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {useCart} from './CartContext'
+import {useFav} from './FavContext'
 
 
 const AuthContext = createContext();
@@ -23,6 +24,7 @@ export function AuthProvider({ children }) {
   const [suserData,setSuserData]=useState('');
 
   const {getcartl} =useCart()
+  const {getfavl} =useFav()
   
 
   useEffect(() => {
@@ -85,6 +87,7 @@ export function AuthProvider({ children }) {
           setIsLoggedIn(true);
         //getting  data for cart here
           getcartl(res.data.id)
+          getfavl(res.data.id)
         }
         
       })

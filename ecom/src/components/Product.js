@@ -5,6 +5,7 @@ import { useProductsContext  } from '../context/ApiContext';
 import {useCart} from '../context/CartContext'
 import { useAuth } from '../context/AuthContext';
 import { useSaleContext } from '../context/SaleContext';
+import Footer from './Footer';
 
 
 export default function Product({ product }) {
@@ -97,7 +98,6 @@ export default function Product({ product }) {
               price: productt.price,
             image:productt.image,
             name:productt.name,
-            qty:1
     
           }
           alert(`${productt.name} Added to fav`)
@@ -160,7 +160,7 @@ export default function Product({ product }) {
 
 
 
-
+<Footer/>
 
         </>
     )

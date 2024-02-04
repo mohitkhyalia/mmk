@@ -62,11 +62,7 @@ class CartSerializer(serializers.ModelSerializer):
         model = cart
         fields = '__all__'
     
-    '''class Meta:
-        model = cart
-        fields = ['user_id', 'items']
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['items'] = representation['items'] or []
-        return representation'''
+class FavSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = fav
+        fields = '__all__'

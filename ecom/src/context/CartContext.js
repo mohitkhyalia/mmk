@@ -66,7 +66,7 @@ const CartProvider = ({ children }) => {
     console.log(id)
     const cartData = {
       user_id: id,
-      items: item,
+      items: [item],
     };
     console.log(cartData)
 

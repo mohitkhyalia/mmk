@@ -13,6 +13,7 @@ export default function Sale() {
     const { products, loading } = useProductsContext();
     const { addToFav } = useCart();
     const { saleinfo,sale_title,sLoading} = useSaleContext();
+    const [currentDate, setCurrentDate] = useState(new Date());
     
   
     
@@ -90,7 +91,11 @@ export default function Sale() {
         addToFav(itemToAdd);
         }
 
-       
+        const intervalId = setInterval(() => {
+          setCurrentDate(new Date());
+        });
+
+      const date_to=currentDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
 
     return(
         <>
@@ -98,7 +103,7 @@ export default function Sale() {
 
     <div className="main">
 
-    {saleinfo?(<>
+    {saleinfo.start_date == date_to ? (<>
         <div className='serch-box'>
           
         <h1 >{sale_title} </h1>

@@ -20,6 +20,8 @@ import { UserProvider } from './context/UserContext';
 import Fav from './components/Fav';
 import Contact from './components/Contact';
 import { SaleProvider } from './context/SaleContext';
+import { FavProvider } from './context/FavContext';
+import Home from './components/Home';
 
 function App() {
   
@@ -27,6 +29,7 @@ function App() {
     <>
    <Router>
    <CartProvider>
+    <FavProvider>
    <AuthProvider>
    
    
@@ -38,7 +41,8 @@ function App() {
           <SaleProvider>
             
          <Routes>
-          <Route exact path="/" element={<Index/>}></Route>
+         <Route exact path="/" element={<Home/>}></Route>
+          <Route exact path="/n" element={<Index/>}></Route>
           <Route exact path="/product/:productid" element={<ProductsProvider><Product/></ProductsProvider>}></Route>
           <Route exact path="/contact" element={<Contact/>}></Route>
           <Route exact path="/cart/" element={ <CopnProvider><Cart/> </CopnProvider> }></Route>
@@ -57,6 +61,7 @@ function App() {
       
       
       </AuthProvider>
+      </FavProvider>
       </CartProvider>
       </Router>
       

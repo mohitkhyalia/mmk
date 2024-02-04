@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import {useCart} from '../context/CartContext'
 import { useCopnContext  } from '../context/Copn';
 import axios from 'axios';
+import Footer from './Footer';
 
 export default function Cart(props) {
   const { isLoggedIn ,logout,suserData} = useAuth();
@@ -13,6 +14,7 @@ export default function Cart(props) {
  const { cartItems, addToCart,cartItems_todisplay, removeFromCart ,getItems} = useCart();
   const { couponData} = useCopnContext();
  const [subtotal, setSubtotal] = useState(0);
+ const [qty,setQty]=useState(1)
   const taxRate = 0.05; // 5% tax rate
   const shippingFee = 15;
   const [couponInput, setCouponInput] = useState(''); // Note the corrected variable name
@@ -92,7 +94,9 @@ export default function Cart(props) {
       // Set the userCart state or handle it as needed in your application
     }this is empty
   }*/
-  
+  const handleQtyChange = (event) => {
+    setQty(event.target.value); 
+  };
     return(<>
     <Nav/>
             
@@ -125,14 +129,14 @@ export default function Cart(props) {
     </div>
     <div className="product-price">{item.price}</div>
     <div className="product-quantity">
-    {item.qty} 
+     <input type='number'  value={qty}onChange={handleQtyChange}/>
     </div>
     <div className="product-removal">
       <button className="remove-product" onClick={() => removeCart(item)}>
         Remove
       </button>
     </div>
-    <div className="product-line-price">{item.price * item.qty }</div>{console.log('qty',item.qty)}
+    <div className="product-line-price">{item.price * qty }</div>{console.log('qty',qty)}
   </div></>
 ))}</>):(<>Let's add some</>)}
 
@@ -169,5 +173,6 @@ export default function Cart(props) {
 
 </div>
             </div>
+            <Footer/>
            </>)}
 

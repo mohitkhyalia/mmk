@@ -11,6 +11,7 @@ urlpatterns = [
     path('check',check.as_view(),name="check"),
     path('pay/', start_payment, name="start_payment"),
     path('handlepayment/', handlepayment, name="handlepayment"),
-    path('cart/', CartDetailView.as_view(), name='cart-detail'),
+    #path('cart/', CartDetailView.as_view(), name='cart-detail'),
     path('getcart/', getcartda.as_view()),
+    path('getfav/', getfavda.as_view()),
 ]

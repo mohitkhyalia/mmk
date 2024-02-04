@@ -2,13 +2,23 @@ import React ,{ useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import Nav from './Nav';
 import { useProductsContext  } from '../context/ApiContext';
-import {useCart} from '../context/CartContext'
+import {useFav} from '../context/FavContext'
+import Footer from './Footer';
 
 export default function Index() {
     const { products, loading } = useProductsContext();
-    const { addToFav } = useCart();
+    const { addTofav } = useFav();
     /************api */
     const [searchInput, setSearchInput] = useState('');
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
+  
+  useEffect(() => {
+    // Filter products based on search input
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setSearchSuggestions(filteredProducts);
+  }, [searchInput, products]);
 
       if (loading) {
         return (
@@ -48,9 +58,9 @@ export default function Index() {
       name:dp.name,
 
     }
-    console.log(dp);
+    console.log(itemToAdd);
     alert(`${dp.name} Added to fav`)
-    addToFav(itemToAdd);
+    addTofav(itemToAdd);
     }
   
 
@@ -64,7 +74,11 @@ export default function Index() {
         <div className='serch-box'>
         <input className='search'placeholder='Search' /* from search*/value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}/**end**/ />
-          
+          {searchInput?(<div className=' ser_data'>
+            {searchSuggestions.map((items)=>(
+            <Link to={{pathname: `/d/${items.cato}`}}><p className='' key={items.id}>{items.name}</p></Link>
+            ))}
+          </div>):(<></>)}
         </div>
         <div className='ad-space'>
         {filteredProducts.map((product) => (
@@ -85,6 +99,7 @@ export default function Index() {
         </div>
         
     </div>
+    <Footer/>
         </>
     )
 }

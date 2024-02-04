@@ -45,7 +45,7 @@ export default function Singup() {
                         <label for="password">Mobile:</label>
                         <input type="text" id="mobile" name="mobile" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="Enter your password" required/>
                     </div>
-
+                    <Link>T&C</Link>
                     <div className="form-group">
                         <button onClick={handlreg}>SignUp</button>
                         <Link to='/signin'>Signin</Link>

@@ -2,23 +2,29 @@ import React ,{ useState,useEffect } from 'react'
 import { Link,useParams } from "react-router-dom";
 import Nav from './Nav';
 import { useAuth } from '../context/AuthContext';
-import {useCart} from '../context/CartContext'
+import {useFav} from '../context/FavContext'
 
 export default function Fav() {
-    const { addToCart,fav, removeFromFav, clearFav } = useCart();
+  const { favItems, addTofav,favItems_todisplay, removeFromfav }  = useFav();
     
+  useEffect(() => {
+    // Function to refresh data
+    const fetchData = () => {
+      // Your data fetching logic here
+      console.log('Data refreshed!',favItems_todisplay.items);
+    };fetchData()
+  }, []);
     
-    
-    console.log(fav);
+    console.log(favItems_todisplay);
     return(<>
         <Nav/>
         <div className='main'>
-            <button onClick={() => clearFav()}>Clear all</button>
+            <button >Clear all</button>
             <div className='ad-space'>
-                {fav.map((item, index) => (<>
+            {Array.isArray(favItems_todisplay) && favItems_todisplay.length > 0 ?(<>{favItems_todisplay.map((item, index) => (<>
                 
                     <div className="card" key={index}>
-                <Link   className='fav-btn icon-btn' onClick={() => removeFromFav(item)}><span className="material-symbols-outlined">favorite</span></Link>
+                <Link   className='fav-btn icon-btn' onClick={() => removeFromfav(item)}><span className="material-symbols-outlined">favorite</span></Link>
                 <div className="card-content">
                   <img src={item.image} alt="Product Image" />
                 </div>
@@ -31,7 +37,7 @@ export default function Fav() {
                 >
                   Shop
                 </Link>
-              </div></>))}
+              </div></>))}</>):(<>Let's add some</>)}
             </div>
         </div>
         </>

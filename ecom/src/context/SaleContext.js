@@ -45,7 +45,13 @@ export function SaleProvider({ children }) {
               const targetDate = new Date(formattedDate);
             
               // Compare dates to find elements with start_date before formattedDate
-              return saleDate < targetDate;
+              if(saleDate < targetDate){
+                console.log(saleDate,'*****',targetDate);
+                return targetDate
+              }
+              else{
+                return []
+              }
               
             });
             console.log(sale_data.name);

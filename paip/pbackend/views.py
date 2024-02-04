@@ -105,67 +105,89 @@ class user(APIView):
                 return Response(san.errors)
             return Response({'error': 'Object not found for the logged-in user'}, status=status.HTTP_404_NOT_FOUND)
        
-class CartDetailView(APIView):
-    def patch(self,request):
-        data = request.data
-        print('Data---------------->',data)
-        usr=int(data['user_id'])
-        
+class getfavda(APIView):
 
-        cr=cart.objects.filter(user_id=usr)
-        print('cr----------->',cr)
-        print('san----------->',cart.objects.get('items'))
+    def get(self, request):
+        user_id = int(request.query_params.get('user_id'))
+        favs = fav.objects.filter(user_id=user_id)
         
-        if cr:
-            items = data.get('item')
-            san = CartSerializer(data={'user_id': usr, 'items': items})
+        if favs.exists():
+            obj = favs.first()
+            san = FavSerializer(obj)
             
-            if san.is_valid():
-                item=cart.objects.get('items')
-                print('items -------------------->',item)
-            
-                san.save()
             return Response(san.data)
-        return Response(san.errors)
+        else:
+            obj = favs.first()
+            san = FavSerializer(obj)
+            print(san.data)
+            no_data={'user_id': None, 'items': None}
+            if san.data == no_data:
+                default_data={'user_id': 'noData', 'items':{'user_id':'noData', 'items':['nodata']}}
+                return Response(default_data)
 
+            return Response({"error": "Object not found for the given user_id"},status=404)
 
-    '''queryset = cart.objects.all()
-    serializer_class = CartSerializer
-    lookup_url_kwarg = 'user_id'
+    def post(self, request):
+        data = request.data
+        user_id = int(request.query_params.get('user_id'))
 
-    def create(self, request, *args, **kwargs):
-        user_id = request.data.get('user_id')
-        items = request.data.get('item')
-
-        data = {'user_id': user_id, 'items': items}
-        serializer = CartSerializer(data=data)
-        #print('ser********',serializer)
-        if serializer.is_valid():
+        favs = fav.objects.filter(user_id=user_id)
+        if favs.exists():
+            obj = favs.first()
             
-            #print('------------------>',(serializer.validated_data))
-            existing_cart = cart.objects.filter(user_id=user_id).first()
-            
-            
-            if existing_cart:
-                print('existing_cart.items before:', existing_cart.items)
-                items_to_append = serializer.validated_data.get('items')
-                existing_items = existing_cart.items
-                existing_items.append(items_to_append)
-                existing_cart.items = existing_items
-                print('items_to_append:', existing_cart.items)
+            existing_items = obj.items
+            new_items = data.get('items', None)
+            if new_items:
+                print("************\n",existing_items)
+                existing_items.append(new_items)
+                obj.items =existing_items
+                print(obj.items,new_items)
+                obj.save()
+                san = FavSerializer(obj)
+            return Response({})
+        else:
+            san = FavSerializer(data={'user_id': user_id, 'items': data['items']})
+            if san.is_valid():
+                san.save()
+                return Response(san.data)
+            return Response(san.errors)
 
-                existing_cart.save()  # Only save if modifying other fields
+    def patch(self,request):
+        user_id = request.query_params.get('user_id')
+        item_id=request.data['id']
+        print('gett***************>>>>',item_id)
+        if user_id is not None and item_id is not None:
+            try:
+                user_id = int(user_id)
+                carts = cart.objects.filter(user_id=user_id)
 
-                return Response({'detail': 'Item added to the cart'}, status=status.HTTP_201_CREATED)
-            else:
-                print('elsee*****')
-                
-                new_cart = cart.objects.create(user_id=user_id, items=[serializer.validated_data])
-                print('nw********',new_cart)
-                
-                
-                return Response({'detail': 'Item added to a new cart'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
+                if carts.exists():
+                    obj = carts.first()
+                    existing_items = obj.items.get('items', [])  
+
+                    found_index = None
+                    for index, item in enumerate(existing_items):
+                        if item['id'] == item_id:
+                            found_index = index
+                            break
+
+                    if found_index is not None:
+                        existing_items.pop(found_index)
+                        obj.items['items'] = existing_items
+                        obj.save()
+                        san = CartSerializer(obj)
+                        return Response({"message": f"Product with id {item_id} deleted successfully."})
+                    else:
+                        return Response({"error": f"Product with id {item_id} not found in the cart."})
+
+                else:
+                    return Response({"error": f"Cart not found for user with id {user_id}"})
+
+            except ValueError:
+                return Response({"error": f"Invalid user ID: {user_id}"})
+        else:
+            return Response({"error": "Product ID not provided in the request."})
+        
 
 class getcartda(APIView):
 
@@ -178,8 +200,17 @@ class getcartda(APIView):
             san = CartSerializer(obj)
             
             return Response(san.data)
+        
         else:
-            return Response({"error": "Object not found for the given user_id"}, status=404)
+            obj = carts.first()
+            san = CartSerializer(obj)
+            print(san.data)
+            no_data={'user_id': None, 'items': None}
+            if san.data == no_data:
+                default_data={'user_id': 'noData', 'items':{'user_id':'noData', 'items':['nodata']}}
+                return Response(default_data)
+
+            return Response({"error": "Object not found for the given user_id"},status=404)
 
     def post(self, request):
         data = request.data

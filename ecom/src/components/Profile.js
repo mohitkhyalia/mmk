@@ -5,6 +5,7 @@ import { useAuth  } from '../context/AuthContext';
 import { useUser  } from '../context/UserContext';
 //import {useCart} from '../context/CartContext'
 import Singin from './Signin';
+import Footer from './Footer';
 
 
 export default function Profile() {
@@ -103,7 +104,7 @@ export default function Profile() {
         <h1>Waiting for user data...</h1>
       )}
     </div>
-    
+    <Footer/>
         </>):(<Singin/>)}</>)
         }
 

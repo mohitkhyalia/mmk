@@ -1,27 +1,20 @@
-import React ,{ useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link,useParams } from "react-router-dom";
 
-export default function Footer() {
 
-return(
-    <>
 
-<footer >
-<div className="footer-content ">
-    <h3>Poshak</h3>
-    <p>Best way to enjoy your day, starts with best dress</p>
-    {/*<ul className="socials">
-        <li><Link to="#"><i className="fa fa-facebook"></i></Link></li>
-        <li><Link to="#"><i className="fa fa-twitter"></i></Link></li>
-        <li><Link to="#"><i className="fa fa-google-plus"></i></Link></li>
-        <li><Link to="#"><i className="fa fa-youtube"></i></Link></li>
-        <li><Link to="#"><i className="fa fa-linkedin-square"></i></Link></li>
-</ul>*/}
-</div>
-<div className="footer-bottom">
-    <p>copyright &copy; <Link to="/">Poshak</Link>  </p>
-            
-</div>
+const Footer = () => {
+  return (
+    <footer>
+        <div>
+           <Link to='https://instagram.com/moghitclothing' ><img src='logo1.jpg' style={{height :'5vh' , width : '5vh',borderRadius:'12px'}} alt='Logo'/> </Link>
+        </div>
+      <p>&copy; {new Date().getFullYear()} MogHit. All rights reserved.</p>
+      <p>
+        Made with <span role="img" aria-label="heart">❤️</span> by me.
+      </p>
+    </footer>
+  );
+};
 
-</footer>
-</>)}
+export default Footer;

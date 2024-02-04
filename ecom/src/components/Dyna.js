@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Nav from './Nav';
 import { useProductsContext } from '../context/ApiContext';
 import { useCart } from '../context/CartContext';
+import Footer from './Footer';
 
 export default function Dyna() {
   const { productcato } = useParams();
@@ -49,19 +50,26 @@ export default function Dyna() {
     addToFav(itemToAdd);
     }
 
+    console.log(searchSuggestions);
   return (
     <>
       <Nav />
 
       <div className="main">
         <div className="serch-box">
-          <input
+         <input
             className="search"
             placeholder="Search"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          
+          {searchInput?(<div className=' ser_data'>
+            {searchSuggestions.map((items)=>(
+            <Link to={{pathname: `/d/${items.cato}`}}><p className='' key={items.id}>{items.name}</p></Link>
+            ))}
+          </div>):(<></>)}
+         
+              
         </div>
         
         <div className="ad-space">
@@ -89,6 +97,7 @@ export default function Dyna() {
           )}
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
