@@ -39,7 +39,7 @@ const FavProvider = ({ children }) => {
     
     client.get(`/api/getfav/?user_id=${id}`).then(function (res) {
       console.log(res);
-      set_favItems(res.data.items.items)
+      set_favItems(res.data.items)
       //setfavItems(res.data.items)
     });
   }
@@ -66,7 +66,7 @@ const FavProvider = ({ children }) => {
     console.log(id)
     const favData = {
       user_id: id,
-      items: [item],
+      items: item,
     };
     console.log(favData)
 

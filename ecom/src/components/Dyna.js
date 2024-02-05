@@ -53,7 +53,7 @@ export default function Dyna() {
     console.log(searchSuggestions);
   return (
     <>
-      <Nav />
+      <Nav/>
 
       <div className="main">
         <div className="serch-box">

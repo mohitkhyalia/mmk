@@ -1,4 +1,4 @@
-import React ,{ useState,useEffect } from 'react'
+import React ,{ useState,useEffect ,useRef } from 'react'
 import { Link } from "react-router-dom";
 import { useProductsContext } from '../context/ApiContext';
 import Footer from './Footer';
@@ -7,7 +7,9 @@ export default function Home()  {
   
     const { products, loading } = useProductsContext();
     const [slideIndex, setSlideIndex] = useState(0);
-      
+    const containerRef = useRef(null);
+    const [cato_product,setcatoproduct]=useState(['none'])
+    const dproduct = products.filter((product) => product.featured === true);
         useEffect(() => {
           const interval = setInterval(() => {
             setSlideIndex((prevIndex) => (prevIndex + 1) % 3);
@@ -15,6 +17,35 @@ export default function Home()  {
       
           return () => clearInterval(interval);
         }, []);
+        useEffect(() => {
+            // Extract unique categories from the products array
+            const uniqueCategories = Array.from(new Set(products.map(product => product.cato)));
+
+            // Create an array of objects containing details for each category
+            const detailsArray = uniqueCategories.map(category => {
+              const categoryProducts = products.filter(product => product.cato === category);
+              return {
+                category,
+                products: categoryProducts[0],
+              };
+            });
+        
+            setcatoproduct(detailsArray);
+          }, [products]);
+          console.log(cato_product)
+        /*/useEffect(()=>{
+            let m=0
+            for (const j in dproduct  &  !m == 10){
+                console.log(j)
+                for ( const i in j){
+                    console.log(i)
+               if ( !cato_product.includes(i.cato)){
+                   setcatoproduct((prev) => [...prev, i])
+               }
+               m+=1
+           }}
+          // },[])*/
+
         if (loading) {
             return (
               <div className="lor-layout">
@@ -45,8 +76,31 @@ export default function Home()  {
         ];
 
 
-    const dproduct = products.filter((product) => product.featured === true);
     
+    
+    
+
+    
+
+    const handleSlideRight = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft += 250;
+            smoothScroll(containerRef.current, 250);
+          }
+    };
+  
+    const handleSlideLeft = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft -= 350;
+            smoothScroll(containerRef.current, -350);}
+    };
+
+    const smoothScroll = (element, distance) => {
+        element.scroll({
+          left: element.scrollLeft + distance,
+          behavior: 'smooth',
+        });
+      };
 
     return(
         <>
@@ -107,30 +161,71 @@ export default function Home()  {
 
     <section>
     <h1 style={{fontWeight :'bold',fontSize:'42px',margin:'0 3vw' }}>Featured</h1>
-    <div className='home-card-box'>
-        
+    <button id="slideLeft" type="button" onClick={handleSlideLeft}>
+    <span class="material-symbols-outlined">
+        keyboard_double_arrow_left
+    </span>
+      </button>
+      <button id="slideRight" type="button" onClick={handleSlideRight}>
+      <span class="material-symbols-outlined">
+        keyboard_double_arrow_right
+    </span>
+      </button>
+    <div id="container" ref={containerRef} className='home-card-box' style={{  whiteSpace: 'nowrap' }}>
+    
     {dproduct.length === 0 ? (
             <p>No products found in this category.</p>
           ) : (
             dproduct.map((product) => (
               
               <div className="home-product-card" key={product.id}>
-                <div className="card-content">
-                  <img src={product.image} alt="Product Image" />
-                </div>
+                
                 <Link
-                  className="btn"
+                  
                   to={{
                     pathname: `/product/${product.id}`,
                     state: { productData: product },
                   }}
                 >
-                  Shop
+                  <div className="card-content">
+                  <img src={product.image} alt="Product Image" />
+                </div>
                 </Link>
               </div>
               
             ))
           )}</div>
+    </section>
+
+    <section>
+    <h1 style={{fontWeight :'bold',fontSize:'42px',margin:'0 3vw' }}>Categories</h1>
+    <div className='home-cato-box'>
+    {cato_product.length === 0 ? (
+            <p>No products found in this category.</p>
+          ) : (
+            cato_product.map((product) => (
+              <div style={{display:'grid',justifyItems: 'center'}}>
+              <div className="home-cato-card" key={product.products.id}>
+                
+                <Link
+                  
+                  to={{
+                    pathname: `/d/${product.category}`,
+                    state: { productData: product },
+                  }}
+                >
+                  <div className="card-content">
+                  <img src={product.products.image} alt="Product Image" />
+                </div>
+                </Link>
+                
+              </div>
+              <h3>{product.category}</h3>
+              </div>
+              
+            ))
+          )}
+    </div>
     </section>
     
     <Footer/>

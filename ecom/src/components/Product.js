@@ -77,7 +77,7 @@ export default function Product({ product }) {
             price: productt.price,
           image:productt.image,
           name:productt.name,
-          qty:1
+          qty:qty
   
         }
         console.log(suserData.id);

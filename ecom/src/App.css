@@ -324,17 +324,69 @@ img {vertical-align: middle;}
   margin-bottom: 10px;
 }
 
+#slideLeft{
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: -44%;
+  background: #00000054;
+  width: 4vw;
+  text-align: center;
+  margin-left: 1vw;
+  padding: 1vw 3vh 1vh 1vh;
+}
+
+#slideRight{
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: -44%;
+  background: #00000054;
+    width: 4vw;
+    text-align: center;
+    margin-right: 1vw;
+    padding: 1vw ;
+}
+
+
 
 .home-card-box{
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: hidden;
   margin:4vh 1vh ;
   align-items: center;
   gap: 1vh;
+  transition: 1s;
 }
 
 .home-product-card{
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+  background-color: #fff;
+  max-width: 300px;
+  min-width: 30vw;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: top 0.3s;
+}
+
+
+.home-cato-box{
+  display: flex;
+  justify-content: space-around;
+  overflow-x: hidden;
+  margin:4vh 1vh ;
+  align-items: center;
+  gap: 1vh;
+  transition: 1s;
+}
+
+.home-cato-card{
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: relative;
     display: flex;

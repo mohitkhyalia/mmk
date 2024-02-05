@@ -39,7 +39,7 @@ const CartProvider = ({ children }) => {
     
     client.get(`/api/getcart/?user_id=${id}`).then(function (res) {
       console.log(res);
-      set_cartItems(res.data.items.items)
+      set_cartItems(res.data.items)
       //setCartItems(res.data.items)
     });
   }
@@ -49,7 +49,7 @@ const CartProvider = ({ children }) => {
     
     client.get(`/api/getcart/?user_id=${e}`).then(function (res) {
       console.log(res);
-      set_cartItems(res.data.items.items)
+      set_cartItems(res.data.items)
       //setCartItems(res.data.items)
     });}
   }
@@ -66,7 +66,7 @@ const CartProvider = ({ children }) => {
     console.log(id)
     const cartData = {
       user_id: id,
-      items: [item],
+      items: item,
     };
     console.log(cartData)
 

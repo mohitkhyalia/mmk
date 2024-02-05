@@ -103,7 +103,7 @@ export default function Nav() {
                             <Link to={{pathname: `/d/${'saree'}`}}>Three Piece</Link>
                             <Link to={{pathname: `/d/${'saree'}`}}></Link>
                             </div></li>
-                        <li className='col-nav-itm'><Link to='/contact'>Contact Us</Link></li>
+                        
                         
                     </ul>
                 </div>

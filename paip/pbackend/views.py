@@ -29,6 +29,7 @@ class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("****************************************************>>>>>>>>>",request.data)
         serializer = RegisterSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -146,7 +147,7 @@ class getfavda(APIView):
                 san = FavSerializer(obj)
             return Response({})
         else:
-            san = FavSerializer(data={'user_id': user_id, 'items': data['items']})
+            san = FavSerializer(data={'user_id': user_id, 'items': [data['items']]})
             if san.is_valid():
                 san.save()
                 return Response(san.data)
@@ -159,21 +160,22 @@ class getfavda(APIView):
         if user_id is not None and item_id is not None:
             try:
                 user_id = int(user_id)
-                carts = cart.objects.filter(user_id=user_id)
+                favs = fav.objects.filter(user_id=user_id)
 
-                if carts.exists():
-                    obj = carts.first()
-                    existing_items = obj.items.get('items', [])  
+                if favs.exists():
+                    obj = favs.first()
+                    existing_items = obj.items
 
                     found_index = None
                     for index, item in enumerate(existing_items):
+                        print('*************/n=============>',item)
                         if item['id'] == item_id:
                             found_index = index
                             break
 
                     if found_index is not None:
                         existing_items.pop(found_index)
-                        obj.items['items'] = existing_items
+                        obj.items = existing_items
                         obj.save()
                         san = CartSerializer(obj)
                         return Response({"message": f"Product with id {item_id} deleted successfully."})
@@ -223,14 +225,15 @@ class getcartda(APIView):
             existing_items = obj.items
             new_items = data.get('items', None)
             if new_items:
-                existing_items['items'].append(new_items)
+                existing_items.append(new_items)
                 obj.items =existing_items
                 print(obj.items,new_items)
                 obj.save()
                 san = CartSerializer(obj)
             return Response({})
         else:
-            san = CartSerializer(data={'user_id': user_id, 'items': data['items']})
+            san = CartSerializer(data={'user_id': user_id, 'items': [data['items']]})
+            
             if san.is_valid():
                 san.save()
                 return Response(san.data)
@@ -247,7 +250,7 @@ class getcartda(APIView):
 
                 if carts.exists():
                     obj = carts.first()
-                    existing_items = obj.items.get('items', [])  
+                    existing_items = obj.items  
 
                     found_index = None
                     for index, item in enumerate(existing_items):
@@ -257,7 +260,7 @@ class getcartda(APIView):
 
                     if found_index is not None:
                         existing_items.pop(found_index)
-                        obj.items['items'] = existing_items
+                        obj.items = existing_items
                         obj.save()
                         san = CartSerializer(obj)
                         return Response({"message": f"Product with id {item_id} deleted successfully."})

@@ -61,19 +61,12 @@ export default function Cart(props) {
 
   // Calculate the subtotal when the cart or item quantities change
   useEffect(() => {
-    // Function to refresh data
-    const fetchData = () => {
-      // Your data fetching logic here
-      console.log('Data refreshed!',cartItems_todisplay.items);
-    };
-
-    // Refresh data three times in the first 30 seconds
-   /* for (let i = 1; i <= 3; i++) {
-      setTimeout(() => {
-        fetchData();
-      }, i * 1000); // 10 seconds interval
-    }*/
-  }, []);
+    let updatedSubtotal = 0;
+    for (const item of cartItems_todisplay) {
+      updatedSubtotal += parseFloat(item.price) * qty;
+    }
+    setSubtotal(updatedSubtotal);
+  }, [cartItems_todisplay]);
 
   // Calculate the tax and grand total
   const tax = subtotal * taxRate;
@@ -109,7 +102,7 @@ export default function Cart(props) {
             <h1>Shopping Cart</h1>
 
 <div className="shopping-cart">
-  {Array.isArray(cartItems_todisplay) && cartItems_todisplay.length > 0 ?(<>{cartItems_todisplay.map((item, index) => (<>
+ 
   <div className="column-labels">
     <label className="product-image">Image</label>
     <label className="product-details">Product</label>
@@ -118,7 +111,7 @@ export default function Cart(props) {
     <label className="product-removal">Remove</label>
     <label className="product-line-price">Total</label>
   </div>
-
+  {Array.isArray(cartItems_todisplay) && cartItems_todisplay.length > 0 ?(<>{cartItems_todisplay.map((item, index) => (<>
   <div className="product" key={index} >
     <div className="product-image">
       <img src={item.image}/>
@@ -129,14 +122,14 @@ export default function Cart(props) {
     </div>
     <div className="product-price">{item.price}</div>
     <div className="product-quantity">
-     <input type='number'  value={qty}onChange={handleQtyChange}/>
+     {item.qty}
     </div>
     <div className="product-removal">
       <button className="remove-product" onClick={() => removeCart(item)}>
         Remove
       </button>
     </div>
-    <div className="product-line-price">{item.price * qty }</div>{console.log('qty',qty)}
+    <div className="product-line-price">{item.price * item.qty }</div>{console.log('qty',qty)}
   </div></>
 ))}</>):(<>Let's add some</>)}
 
