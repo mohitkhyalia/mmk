@@ -1,9 +1,13 @@
 import React ,{ useState } from 'react'
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
+import { jwtDecode } from "jwt-decode";
+import { GoogleLogin  } from '@react-oauth/google';
+
 export default function Singup() {
 
-    const { submitlogin, submitUser, isLoggedIn,updateislog } = useAuth();
+    
+    const {  submitUser, isLoggedIn,updateislog } = useAuth();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -50,6 +54,16 @@ export default function Singup() {
                         <button onClick={handlreg}>SignUp</button>
                         <Link to='/signin'>Signin</Link>
                     </div>
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            const decoded = jwtDecode(credentialResponse?.credential);
+                            const lval={"email":decoded.email,"password":decoded.sub}
+                            submitUser(lval)
+                        console.log(decoded);
+                            }}
+                        onError={() => {
+                        console.log('Login Failed');
+                        }}/>;
                 </form>
             </div>
         </div></>)}

@@ -46,7 +46,7 @@ export default function Admin() {
   }
 
     const searchfun = () => {
-        console.log(searchInput);
+        //console.log(searchInput);
         const rv = products.filter((product) =>String(product[opt]) === searchInput);
         
         const rrv = rv.map((product) => ({
@@ -81,13 +81,13 @@ export default function Admin() {
           });
       
           const rd =JSON.parse(revalu);
-          console.log(rd);
+          //console.log(rd);
           const response = await client.post('/api/product/', rd);
           alert('recorded added')
           fetchProducts();
         } catch (error) {
           // Handle error
-          console.error('Error adding product:', error);
+          //console.error('Error adding product:', error);
         }
       };
 
@@ -98,13 +98,13 @@ export default function Admin() {
           });
       
           const rd =JSON.parse(revalu);
-          console.log(rd);
+          //console.log(rd);
           const response = await client.patch('/api/product/', rd);
           alert('recorded updated')
           fetchProducts();
         } catch (error) {
           // Handle error
-          console.error('Error adding product:', error);
+          //console.error('Error adding product:', error);
         }
       };
 
@@ -119,11 +119,11 @@ export default function Admin() {
           
           const response = await client.delete(`/api/product/?id=${productId}`);
           alert('recorded deleted')
-          console.log(response);
+          //console.log(response);
           fetchProducts();
         } catch (error) {
           // Handle error
-          console.error('Error adding product:', error);
+          //console.error('Error adding product:', error);
         }
       };
 
@@ -133,7 +133,7 @@ export default function Admin() {
     const storedToken = window.localStorage.token;
 
     const usearchfun = async () => {
-        console.log(suserData);
+        //console.log(suserData);
         
     
           const rv = suserData.filter((user) => String(user[uopt]) === uSearchInput);
@@ -162,7 +162,7 @@ export default function Admin() {
           });
           const accessToken = JSON.parse(storedToken).access;
           const rd =JSON.parse(uRevalu);
-          console.log(rd);
+          //console.log(rd);
           const response = await client.post('/api/user/', rd,{ credentials:'include',headers: {
             Authorization: `Bearer ${accessToken}`,
           },});
@@ -170,7 +170,7 @@ export default function Admin() {
           getuser();
         } catch (error) {
           // Handle error
-          console.error('Error adding product:', error);
+          //console.error('Error adding product:', error);
         }
       };
 
@@ -181,7 +181,7 @@ export default function Admin() {
           });
           const accessToken = JSON.parse(storedToken).access;
           const rd =JSON.parse(uRevalu);
-          console.log(rd);
+          //console.log(rd);
           const response = await client.patch('/api/user/', rd,{ credentials:'include',headers: {
             Authorization: `Bearer ${accessToken}`,
           },});
@@ -189,14 +189,14 @@ export default function Admin() {
           getuser();
         } catch (error) {
           // Handle error
-          console.error('Error adding product:', error);
+          //console.error('Error adding product:', error);
         }
       };
 
     // *********************sale**************************
 
     const salesearchfun = () => {
-      console.log(SSearchInput);
+      //console.log(SSearchInput);
       const rv = sale_data.filter((product) =>String(product[sopt]) === SSearchInput);
       
       const rrv = rv.map((sale) => ({
@@ -219,7 +219,7 @@ export default function Admin() {
       
     
         const rd =JSON.parse(sRevalu);
-        console.log(rd);
+        //console.log(rd);
         salepsot(rd)
         alert('recorded updated')
         sale();
@@ -230,7 +230,7 @@ export default function Admin() {
      
     
         const rd =JSON.parse(sRevalu);
-        console.log(rd);
+        //console.log(rd);
         salepatcht(rd)
         alert('recorded updated')
         sale();
@@ -240,7 +240,7 @@ export default function Admin() {
     const handleSaledelete = async () => {
       
         const rd =JSON.parse(sRevalu);
-        console.log('======>rd',rd);
+        //console.log('======>rd',rd);
         saledeletet(rd)
         alert('recorded deleted')
         sale();

@@ -65,7 +65,7 @@ export default function Home()  {
           },
           {
             id: 2,
-            img: 'https://www.w3schools.com/howto/img_mountains_wide.jpg',
+            img: 'https://www.samyakk.com/blog/wp-content/uploads/2023/07/07.Lehenga-1200x628-1024x536.jpg',
             caption: 'Caption Two',
           },
           {

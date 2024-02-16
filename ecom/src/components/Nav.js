@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Nav() {
 
     const [sidePanelWidth, setSidePanelWidth] = useState('none');
-    const { suserData,isLoggedIn ,submitlogout,updateislog,saleinfo} = useAuth();
+    const { isLoggedIn ,submitlogout,updateislog} = useAuth();
      
 
     
@@ -66,7 +66,7 @@ export default function Nav() {
             <div className='sidebar sidepanel' id="mySidepanel" style={{ display: sidePanelWidth  }}>
             <button  className="closebtn" onClick={closeNav}>×</button>
                 <div className="side-head">
-                <Link to='/' ><img src='logo512.png' alt="Product Image" /></Link>
+                <Link to='/' ><img src='https://drive.google.com/uc?id=1bqx81maMsmA7yrVXAIaeqGyJHAxdpy3T' alt="Product Image" /></Link>
                 </div>
                 {/*<hr className='hr'></hr>*/}
                 <div className='col-nav'>

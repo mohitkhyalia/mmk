@@ -5,6 +5,7 @@ import Index from './components/Index';
 import Product from './components/Product';
 import Profile from './components/Profile';
 import Singup from './components/Singup';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -24,9 +25,10 @@ import { FavProvider } from './context/FavContext';
 import Home from './components/Home';
 
 function App() {
-  
+  const key=process.env.REACT_APP_G_KEY
   return (
     <>
+    <GoogleOAuthProvider clientId={key}>
    <Router>
    <CartProvider>
     <FavProvider>
@@ -64,7 +66,7 @@ function App() {
       </FavProvider>
       </CartProvider>
       </Router>
-      
+      </GoogleOAuthProvider>
     </>
   );
 }
