@@ -1,17 +1,13 @@
 import React ,{ useState,useEffect } from 'react'
 import { Link,useParams } from "react-router-dom";
-import Cookies from 'js-cookie';
 import Nav from './Nav';
-import { useAuth } from '../context/AuthContext';
 import {useCart} from '../context/CartContext'
 import { useCopnContext  } from '../context/Copn';
-import axios from 'axios';
 import Footer from './Footer';
 
 export default function Cart(props) {
-  const { isLoggedIn ,logout,suserData} = useAuth();
  // const { cartdata,removeFromCart, clearCart ,user_id, addToCart, get_cart} = useCart();
- const { cartItems, addToCart,cartItems_todisplay, removeFromCart ,getItems} = useCart();
+ const {  cartItems_todisplay, removeFromCart } = useCart();
   const { couponData} = useCopnContext();
  const [subtotal, setSubtotal] = useState(0);
  const [qty,setQty]=useState(1)
@@ -87,9 +83,7 @@ export default function Cart(props) {
       // Set the userCart state or handle it as needed in your application
     }this is empty
   }*/
-  const handleQtyChange = (event) => {
-    setQty(event.target.value); 
-  };
+  
     return(<>
     <Nav/>
             

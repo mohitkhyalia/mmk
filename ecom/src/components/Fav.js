@@ -1,11 +1,10 @@
 import React ,{ useState,useEffect } from 'react'
 import { Link,useParams } from "react-router-dom";
 import Nav from './Nav';
-import { useAuth } from '../context/AuthContext';
 import {useFav} from '../context/FavContext'
 
 export default function Fav() {
-  const { favItems, addTofav,favItems_todisplay, removeFromfav }  = useFav();
+  const { favItems_todisplay, removeFromfav }  = useFav();
     
   useEffect(() => {
     // Function to refresh data

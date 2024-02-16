@@ -8,8 +8,8 @@ import { useSaleContext } from '../context/SaleContext';
 export default function Admin() {
 
     const { isstaff ,suserData ,getuser} = useAuth();
-    const { products, loading ,fetchProducts} = useProductsContext();
-    const { sale_data,sale_title,sLoading,salepsot,sale,salepatcht,saledeletet} = useSaleContext();
+    const { products,fetchProducts} = useProductsContext();
+    const { sale_data,salepsot,sale,salepatcht,saledeletet} = useSaleContext();
 
 
     const [productpg, setProductpg] = useState(false);

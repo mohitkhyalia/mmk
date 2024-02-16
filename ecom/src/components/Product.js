@@ -1,5 +1,5 @@
 import React ,{ useState,useEffect } from 'react'
-import { Link,NavLink,useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Nav from './Nav';
 import { useProductsContext  } from '../context/ApiContext';
 import {useCart} from '../context/CartContext'
@@ -15,7 +15,7 @@ export default function Product({ product }) {
     const { productid } = useParams();
     const { products, loading } = useProductsContext();
    const { suserData} = useAuth();
-   const { saleinfo,sale_title,sLoading} = useSaleContext();
+   const { saleinfo} = useSaleContext();
    //const { addToCart,addToFav ,updateUserId} = useCart();
   const { cartItems, addToCart, removeFromCart,addToFav } = useCart();
 
